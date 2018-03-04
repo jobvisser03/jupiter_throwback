@@ -2,24 +2,9 @@ from flickrapi import FlickrAPI
 import urllib
 import random
 import yagmail
+import credentials
 
-people = {'werner':'werner.hofmeester@gmail.com',
-          'chef': 'david.m.berenstein@gmail.com',
-          'gerrie': 'joostvanthiel@gmail.com',
-          'rossi': 'ttjanssens@gmail.com',
-          'rick':'rickvannobelen@gmail.com',
-          'max':'maxkonings23@gmail.com',
-          'arjen':'a.franken1710@gmail.com',
-          'frank':'v.f.rutgers@gmail.com',
-          'simon':'simon.riezebos@gmail.com',
-          'luc':'lucjacobs341@gmail.com',
-          'joost': 'joost.vrijhoef@gmail.com',
-          'thomas': 't.h.v.haperen@gmail.com',
-          'brouwer': 'j.h.j.brouwer87@gmail.com',
-          'sander': 'a.t.goessens@gmail.com',
-          'ralf': 'ralf.stamps@gmail.com',
-          'job': 'jobvisserhcm@gmail.com',
-          'timo': 'vandooremaal21@gmail.com'}
+flickr = FlickrAPI(credentials.FLICKR_PUBLIC, credentials.FLICKR_SECRET, format='parsed-json')
 
 def send_mail(tag):
     try:
@@ -27,10 +12,6 @@ def send_mail(tag):
     except:
         return None
 
-    FLICKR_PUBLIC = '9c77a2340902c0b57cb88783a9624413'
-    FLICKR_SECRET = 'b1dfea578f9da931'
-
-    flickr = FlickrAPI(FLICKR_PUBLIC, FLICKR_SECRET, format='parsed-json')
     extras='url_o'
 
     sort_type = ['date-posted-asc', 'date-posted-desc', 'date-taken-asc', 'date-taken-desc', 'interestingness-desc', 'interestingness-asc', 'relevance']
@@ -44,7 +25,7 @@ def send_mail(tag):
         image = urllib.request.urlretrieve(photos['photo'][randomphoto]['url_o'], "throwback.jpg")
         body = 'Jupiter throwback voor ' + tag
 
-        yag = yagmail.SMTP('abhinav.bhatnagar.91@gmail.com', 'hinderbot123')
+        yag = yagmail.SMTP(credentials.mail_address, credentials.mail_password)
         yag.send(to = recipient, subject = 'throwback', contents = [body, 'throwback.jpg'])
 
         return 'mail send'

@@ -1,4 +1,9 @@
 # Jupiter Throwback Bot
 
-ssh admin-user@13.93.127.197
-Throwback123--
+
+## Run script on background
+Ctrl-z
+$ disown -h %1
+$ bg 1
+[1]+ myprogram &
+$ logout
