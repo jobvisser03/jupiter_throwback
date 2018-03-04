@@ -4,6 +4,7 @@ import random
 import yagmail
 import credentials
 
+people = credentials.people
 flickr = FlickrAPI(credentials.FLICKR_PUBLIC, credentials.FLICKR_SECRET, format='parsed-json')
 
 def send_mail(tag):
