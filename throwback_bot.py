@@ -2,7 +2,7 @@ import os
 import time
 import re
 from slackclient import SlackClient
-from mail_src import send_mail, people
+from mail_src import send_mail
 import credentials
 
 # instantiate Slack client
@@ -61,7 +61,7 @@ def handle_command(command, channel):
                     text=response or default_response
                 )
             elif success is None:
-                response = tag + ' not found. try: \n' + str(people.keys())
+                response = tag + ' not found. try: \n' + str(credentials.people.keys())
                 slack_client.api_call(
                     "chat.postMessage",
                     channel=channel,
