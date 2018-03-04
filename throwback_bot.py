@@ -5,6 +5,8 @@ from slackclient import SlackClient
 from mail_src import send_mail
 import credentials
 
+people = credentials.people
+
 # instantiate Slack client
 slack_client = SlackClient(credentials.slack_bot_token)
 # starterbot's user ID in Slack: value is assigned after the bot starts up
@@ -61,7 +63,7 @@ def handle_command(command, channel):
                     text=response or default_response
                 )
             elif success is None:
-                response = tag + ' not found. try: \n' + str(credentials.people.keys())
+                response = tag + ' not found. try: \n' + str(people.keys())
                 slack_client.api_call(
                     "chat.postMessage",
                     channel=channel,
@@ -75,7 +77,6 @@ if __name__ == "__main__":
         starterbot_id = slack_client.api_call("auth.test")["user_id"]
         while True:
             command, channel = parse_bot_commands(slack_client.rtm_read())
-            print(command)
             if command:
                 handle_command(command, channel)
             time.sleep(RTM_READ_DELAY)
